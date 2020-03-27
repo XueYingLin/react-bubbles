@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 
 const initialColor = {
@@ -14,7 +15,6 @@ const ColorList = ({ colors, updateColors }) => {
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
   const {id} = useParams();
-  const history = useHistory();
 
   const editColor = color => {
     setEditing(true);
@@ -27,24 +27,28 @@ const ColorList = ({ colors, updateColors }) => {
     // think about where will you get the id from...
     // where is is saved right now?
 
-     //*******make the PUT request*********/
-
-     axios
-     .put(`http://localhost:5000/api/colors/${id}`, colorToEdit)
-     .then(res => {
-         console.log("Axios call worked");
-         //update state in App through the setter function
-         //navigate user to the movie page (or to the shop)
-         // (Potentially, you could just show a success message without navigating)
-        setColorToEdit(res.data);
-        history.push("/");
-     })
-     .catch(err => console.log(err));
-     //*******make the PUT request*********/
+     
+      axiosWithAuth()
+      .put(`http://localhost:5000/api/colors/${id}`, colorToEdit)
+      .then(res => {
+        setEditing(false);
+        const newColors = [...colors];
+        for (var i = 0; i < newColors.length; i++) {
+          if (newColors[i].id === res.data.id) {
+            newColors[i] = res.data;
+          }
+        }
+        updateColors(newColors);
+      })
+      
   };
 
   const deleteColor = color => {
     // make a delete request to delete this color
+    axiosWithAuth().delete(`http://localhost:5000/api/colors/${color.id}`).then(res => {
+      updateColors(colors.filter(c => c.id != color.id));
+      });
+
   };
 
   return (
