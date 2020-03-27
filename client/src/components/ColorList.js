@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useParams, useHistory } from "react-router-dom";
+
 
 const initialColor = {
   color: "",
@@ -11,6 +13,9 @@ const ColorList = ({ colors, updateColors }) => {
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
+  const {id} = useParams();
+  const history = useHistory();
+
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
@@ -21,6 +26,21 @@ const ColorList = ({ colors, updateColors }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
+
+     //*******make the PUT request*********/
+
+     axios
+     .put(`http://localhost:5000/api/colors/${id}`, colorToEdit)
+     .then(res => {
+         console.log("Axios call worked");
+         //update state in App through the setter function
+         //navigate user to the movie page (or to the shop)
+         // (Potentially, you could just show a success message without navigating)
+        setColorToEdit(res.data);
+        history.push("/");
+     })
+     .catch(err => console.log(err));
+     //*******make the PUT request*********/
   };
 
   const deleteColor = color => {

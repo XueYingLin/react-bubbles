@@ -35,7 +35,7 @@ const Login = (props) => {
   }
   return (
     <>
-      <h1>Welcome to the Bubble App!</h1>
+      {/* <h1>Welcome to the Bubble App!</h1> */}
       <form className="login" onSubmit={login}>
         
         <input 
