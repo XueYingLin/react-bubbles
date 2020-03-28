@@ -12,7 +12,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* <Route exact path="/" component={Login} /> */}
         <section className="link">
           <Link to="/login">Login</Link>
           <br />
@@ -24,7 +23,7 @@ function App() {
         */}
         <Switch>
           <PrivateRoute exact path="/protected" component={BubblePage} />
-          <Route path="login" component={Login} />
+          <Route path="/login" component={Login} />
           <Route component={Login} />
         </Switch>
       </div>

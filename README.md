@@ -33,14 +33,20 @@ Answer: Token presents credential to connect browser to server securely.
 - [ ] What steps can you take in your web apps to keep your data secure?
 
 Answer: Create axiosAuth to exchange data with a protected endpoint from applications.
+<PrivateRoute />
 
 - [ ] Describe how web servers work.
 
 Answer: Web servers process incoming network requests over HTTP and other related protocols.
+add more details: 
 
 - [ ] Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
 
 Answer: Update and delete methods are used when interfacing with APIs/Servers.
+.get('') for retrieve, read
+.delete: D
+.put: update 
+.post: create
 
 
 
